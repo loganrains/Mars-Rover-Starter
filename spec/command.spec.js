@@ -15,6 +15,7 @@ describe("Command class", function() {
     expect( new Command("x")).toEqual({"commandType": "x", "value": undefined});
   });
 
+    // Test 3
   test("constructor sets a value passed in as the 2nd argument", function() {
     expect( new Command("x", "y")).toEqual({"commandType": "x", "value": "y"});
   });
