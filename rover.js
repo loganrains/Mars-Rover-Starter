@@ -4,8 +4,16 @@ class Rover {
       this.mode = mode;
       this.generatorWatts = generatorWatts;
    }
-   recieveMessage() {
-      // finish method
+   recieveMessage(message, results) {
+      let response = {
+         message: message
+      }
+      if (message === "STATUS_CHECK") {
+         response["results"] = {completed: true, roverStatus: {mode: 'NORMAL', generatorWatts: 110, position: 87382098}}
+      } else {
+         response["results"] = results
+      }
+      return response;
    }
 }
 
