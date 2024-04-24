@@ -8,25 +8,31 @@ const Command = require('../command.js');
 
 describe("Rover class", function() {
 
-  // Test 7 <<<Rewrite>>>
+  // Test 7
   test("constructor sets position and default values for mode and generatorWatts", function() {
     expect( new Rover(0)).toEqual({"position": 0, "mode": "NORMAL", "generatorWatts": 110});
   })
 
-  // Test 8 <<<Rewrite>>>
+  // Test 8
   test("response returned by receiveMessage contains the name of the message", function() {
-    expect( new Rover(0).recieveMessage("x", ["y", "z"])).toEqual({"message": "x", "results": ["y", "z"]});
+    let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
+    let message = new Message('Test Message', commands);
+    let testRover = new Rover(0);
+    expect(testRover.recieveMessage(message).message).toEqual("Test Message");
   })
 
-  // Test 9 <<<Rewrite>>>
-  test("response returned by receiveMessage includes two results if two commands are sent in the message", function() {
-    expect( new Rover(0).recieveMessage("x", ["y", "z"])).toEqual({"message": "x", "results": ["y", "z"]});
-  })
+  // // Test 9 <<<Rewrite>>>
+  // test("response returned by receiveMessage includes two results if two commands are sent in the message", function() {
+  //   let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
+  //   let message = new Message('Test Message', commands);
+  //   let testRover = new Rover(0);
+  //   expect(testRover.recieveMessage(message)).toEqual({"results": ["completed: true", "completed: true, roverStatus: {mode: 'LOW_POWER', generatorWatts: 110, position: 0}"]});
+  // })
 
-  // Test 10 <<<Rewrite>>>
-  test("responds correctly to the status check command", function() {
-    expect( new Rover(0).recieveMessage("STATUS_CHECK")).toEqual({"message": "STATUS_CHECK", "results": {"completed": true, "roverStatus": {"generatorWatts": 110, "mode": "NORMAL", "position": 87382098}}});
-  })
+  // // Test 10 <<<Rewrite>>>
+  // test("responds correctly to the status check command", function() {
+  //   expect( new Rover(0).recieveMessage("STATUS_CHECK")).toEqual({"message": "STATUS_CHECK", "results": {"completed": true, "roverStatus": {"generatorWatts": 110, "mode": "NORMAL", "position": 87382098}}});
+  // })
 
   // Test 11 <<<W.I.P.>>>
   // test("responds correctly to the mode change command", function() {

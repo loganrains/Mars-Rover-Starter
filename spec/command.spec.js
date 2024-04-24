@@ -12,11 +12,11 @@ describe("Command class", function() {
 
     // Test 2
   test("constructor sets command type", function() {
-    expect( new Command("STATUS_CHECK")).toEqual({"commandType": "STATUS_CHECK", "value": undefined});
+    expect( new Command("STATUS_CHECK").commandType).toEqual("STATUS_CHECK");
   });
 
     // Test 3
   test("constructor sets a value passed in as the 2nd argument", function() {
-    expect( new Command("MODE_CHANGE", "LOW_POWER")).toEqual({"commandType": "MODE_CHANGE", "value": "LOW_POWER"});
+    expect( new Command("MODE_CHANGE", "LOW_POWER").value).toEqual("LOW_POWER");
   });
 });

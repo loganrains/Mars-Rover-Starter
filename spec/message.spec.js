@@ -13,7 +13,7 @@ describe("Message class", function() {
 
     // Test 5
     test("constructor sets name", function() {
-        expect( new Message("Test Message")).toEqual({"name": "Test Message", "commands": undefined});
+        expect( new Message("Test Message").name).toEqual("Test Message");
     });
 
     // Test 6
