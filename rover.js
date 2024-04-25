@@ -10,8 +10,8 @@ class Rover {
          results: [],
       };
 
-      let possibleResults = {
-         completed: true,
+      let status = {
+         completed: false,
          roverStatus: {
             mode: this.mode,
             generatorWatts: this.generatorWatts,
@@ -21,14 +21,30 @@ class Rover {
 
       for(let i = 0; i < message.commands.length; i++){
          if (message.commands[i].commandType === "MOVE"){
-            response.results.push(possibleResults);
+            if(this.mode === 'LOW_POWER'){
+               response.results.push(status);
+            } else if (this.mode === 'NORMAL'){
+               this.mode = message.commands[i].value;
+               this.position = message.commands[i].value;
+               status.completed = true;
+               response.results.push(status);
+            } else {
+               response.results.push("ERROR UNRECOGNIZED COMMAND")
+            }
+            
          } else if (message.commands[i].commandType === "STATUS_CHECK"){
-            response.results.push(possibleResults);
+            status.completed = true;
+            response.results.push(status);
+
          } else if (message.commands[i].commandType === "MODE_CHANGE"){
-            response.results.push(possibleResults);
+            this.mode = message.commands[i].value;
+            status.roverStatus.mode = message.commands[i].value;
+            status.completed = true;
+            response.results.push(status);
+            
          } else {
             response.results.push("ERROR UNRECOGNIZED COMMAND");
-         }
+         };
       };
       
       return response;

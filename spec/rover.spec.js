@@ -26,24 +26,35 @@ describe("Rover class", function() {
     let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
     let message = new Message('Test Message', commands);
     let testRover = new Rover(0);
-    expect(testRover.recieveMessage(message).results.length).toEqual(2);
+    let testVariable = testRover.recieveMessage(message).results.length
+    expect(testVariable).toEqual(2);
   })
 
   // Test 10
   test("responds correctly to the status check command", function() {
     let commands = [new Command('STATUS_CHECK')];
-    let message = new Message('STATUS_CHECK', commands);
+    let message = new Message('Status Check Test', commands);
     let testRover = new Rover(0);
     let testVariable = testRover.recieveMessage(message).results;
     expect(testVariable).toEqual([{"completed": true, "roverStatus": {"generatorWatts": 110, "mode": "NORMAL", "position": 0}}]);
   })
 
-  // Test 11 <<<W.I.P.>>>
+  // Test 11
   test("responds correctly to the mode change command", function() {
-    // let testRover = new Rover(0)
-  
-    // expect(completed).toEqual(true);
-    // expect()
+    let commands = [new Command('MODE_CHANGE', 'LOW_POWER')];
+    let message = new Message('Mode change test', commands);
+    let testRover = new Rover(0);
+    let testVariable = testRover.recieveMessage(message).results[0].roverStatus.mode;
+    expect(testVariable).toEqual('LOW_POWER');
+  })
+
+  // Test 12
+  test("responds with a false completed value when attempting to move in LOW_POWER mode", function() {
+    let commands = [new Command('MOVE', 10)];
+    let message = new Message('Too tired', commands);
+    let testRover = new Rover(0, "LOW_POWER");
+    let testVariable = testRover.recieveMessage(message).results[0].completed;
+    expect(testVariable).toEqual(false);
   })
 
 });
