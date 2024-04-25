@@ -57,4 +57,13 @@ describe("Rover class", function() {
     expect(testVariable).toEqual(false);
   })
 
+  // Test 13
+  test("responds with the position for the move command", function() {
+    let commands = [new Command('MOVE', 10)];
+    let message = new Message('Move', commands);
+    let testRover = new Rover(0);
+    let testVariable = testRover.recieveMessage(message).results[0].roverStatus.position;
+    expect(testVariable).toEqual(10);
+  })
+
 });

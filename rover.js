@@ -24,8 +24,8 @@ class Rover {
             if(this.mode === 'LOW_POWER'){
                response.results.push(status);
             } else if (this.mode === 'NORMAL'){
-               this.mode = message.commands[i].value;
                this.position = message.commands[i].value;
+               status.roverStatus.position = message.commands[i].value;
                status.completed = true;
                response.results.push(status);
             } else {
