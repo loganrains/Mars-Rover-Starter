@@ -4,24 +4,27 @@ class Rover {
       this.mode = mode;
       this.generatorWatts = generatorWatts;
    }
-   recieveMessage(message) {
+   receiveMessage(message) {
       let response = {
          message: message.name,
          results: [],
       };
 
-      let status = {
-         completed: false,
-         roverStatus: {
-            mode: this.mode,
-            generatorWatts: this.generatorWatts,
-            position: this.position
-         }
-      };
 
       for(let i = 0; i < message.commands.length; i++){
+        
+         let status = {
+            completed: false,
+            roverStatus: {
+               mode: this.mode,
+               generatorWatts: this.generatorWatts,
+               position: this.position
+            }
+         };
+        
          if (message.commands[i].commandType === "MOVE"){
             if(this.mode === 'LOW_POWER'){
+               status.completed = false;
                response.results.push(status);
             } else if (this.mode === 'NORMAL'){
                this.position = message.commands[i].value;
@@ -31,7 +34,7 @@ class Rover {
             } else {
                response.results.push("ERROR UNRECOGNIZED COMMAND")
             }
-            
+          
          } else if (message.commands[i].commandType === "STATUS_CHECK"){
             status.completed = true;
             response.results.push(status);
@@ -44,9 +47,8 @@ class Rover {
             
          } else {
             response.results.push("ERROR UNRECOGNIZED COMMAND");
-         };
+         }; console.log(response);
       };
-      
       return response;
    }
 }

@@ -18,7 +18,7 @@ describe("Rover class", function() {
     let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
     let message = new Message('Test Message', commands);
     let testRover = new Rover(0);
-    expect(testRover.recieveMessage(message).message).toEqual("Test Message");
+    expect(testRover.receiveMessage(message).message).toEqual("Test Message");
   })
 
   // Test 9
@@ -26,7 +26,7 @@ describe("Rover class", function() {
     let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
     let message = new Message('Test Message', commands);
     let testRover = new Rover(0);
-    let testVariable = testRover.recieveMessage(message).results.length
+    let testVariable = testRover.receiveMessage(message).results.length
     expect(testVariable).toEqual(2);
   })
 
@@ -35,7 +35,7 @@ describe("Rover class", function() {
     let commands = [new Command('STATUS_CHECK')];
     let message = new Message('Status Check Test', commands);
     let testRover = new Rover(0);
-    let testVariable = testRover.recieveMessage(message).results;
+    let testVariable = testRover.receiveMessage(message).results;
     expect(testVariable).toEqual([{"completed": true, "roverStatus": {"generatorWatts": 110, "mode": "NORMAL", "position": 0}}]);
   })
 
@@ -44,7 +44,7 @@ describe("Rover class", function() {
     let commands = [new Command('MODE_CHANGE', 'LOW_POWER')];
     let message = new Message('Mode change test', commands);
     let testRover = new Rover(0);
-    let testVariable = testRover.recieveMessage(message).results[0].roverStatus.mode;
+    let testVariable = testRover.receiveMessage(message).results[0].roverStatus.mode;
     expect(testVariable).toEqual('LOW_POWER');
   })
 
@@ -53,7 +53,7 @@ describe("Rover class", function() {
     let commands = [new Command('MOVE', 10)];
     let message = new Message('Too tired', commands);
     let testRover = new Rover(0, "LOW_POWER");
-    let testVariable = testRover.recieveMessage(message).results[0].completed;
+    let testVariable = testRover.receiveMessage(message).results[0].completed;
     expect(testVariable).toEqual(false);
   })
 
@@ -62,8 +62,7 @@ describe("Rover class", function() {
     let commands = [new Command('MOVE', 10)];
     let message = new Message('Move', commands);
     let testRover = new Rover(0);
-    let testVariable = testRover.recieveMessage(message).results[0].roverStatus.position;
+    let testVariable = testRover.receiveMessage(message).results[0].roverStatus.position;
     expect(testVariable).toEqual(10);
   })
-
 });
